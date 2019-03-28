@@ -10,8 +10,8 @@
     }
   },
   "labels": {
-      "template": "pdf2-deploy",
-      "app": "pdf2-deploy"
+      "template": "pdf2",
+      "app": "pdf2"
   },
   "objects": [
     {
