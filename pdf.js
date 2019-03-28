@@ -16,7 +16,7 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 	// https://www.npmjs.com/package/html-pdf
 	var pdf = require('html-pdf');
 
-	// setup mustache templat
+	// setup mustache template
 	fs = require('fs');
 	fs.readFile('Templates/'+templateName+'.mustache', 'utf8', function (err,template) {
 		if (err)
@@ -26,7 +26,6 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 		else
 		{
 			// render
-
 			var html = mustache.render( template, viewData )
 
 			// PDF options

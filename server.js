@@ -1,6 +1,7 @@
 var express = require('express'),
     app     = express(),
-    pdf     = require('./pdf');
+    pdf     = require('./pdf'),
+    moment  = require('moment');
 
 Object.assign=require('object-assign')
 
@@ -11,7 +12,11 @@ app.use(express.json());
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  res.status(500).send('Something bad happened!');
+  res.status(500).send('Server Error!');
+});
+
+app.get('/', function (req, res) {
+  res.send(200);
 });
 
 app.post('/api/PDF/GetPDF', function (req, res) {
@@ -22,6 +27,13 @@ app.post('/api/PDF/GetPDF', function (req, res) {
   };
 
   pdf(function(err, stream){
+    if (err){
+      console.error('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] ' + err.stack);
+      res.status(500).send('Server Error!');
+    }
+
+    console.log('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Permit PDF: ' + data.permitNumber);
+
     var filename = 'Permit-' + data.permitNumber + '.pdf';
     filename = encodeURIComponent(filename);
     res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
