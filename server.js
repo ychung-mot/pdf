@@ -12,11 +12,11 @@ app.use(express.json());
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  res.status(500).send('Server Error!');
+  res.sendStatus(500);
 });
 
 app.get('/', function (req, res) {
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.post('/api/PDF/GetPDF', function (req, res) {
