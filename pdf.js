@@ -4,8 +4,8 @@ module.exports = function (callback, templateName, viewData, pdfOptions) {
 		format: 'Letter',
 		orientation: 'landscape',
 		"border": {
-			"top": "0.5in",
-			"right": "0.3in",
+			"top": "0.3in",
+			"right": "0.2in",
 			"bottom": "0.2in",
 			"left": "0.3in"
 		},
