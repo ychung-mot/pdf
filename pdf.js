@@ -1,11 +1,20 @@
-fs = require('fs')
+module.exports = function (callback, templateName, viewData, pdfOptions) {
 
-module.exports = function (callback, templateName, viewData) {
+	const DEFAULT_PDF_OPTIONS = {
+		format: 'Letter',
+		orientation: 'landscape',
+		"border": {
+			"top": "0.5in",
+			"right": "0.3in",
+			"bottom": "0.2in",
+			"left": "0.3in"
+		},
+	};
 
 	// https://www.npmjs.com/package/mustache
 	var mustache = require ('mustache');
 	// https://www.npmjs.com/package/html-pdf
-	var pdf = require('html-pdf-chrome');
+	var pdf = require('html-pdf');
 
 	// setup mustache template
 	fs = require('fs');
@@ -20,13 +29,19 @@ module.exports = function (callback, templateName, viewData) {
 			var html = mustache.render( template, viewData )
 
 			// PDF options
-			var options = { printOptions: { landscape: true, marginTop: 0.2, marginBottom: 0.2, marginLeft: 0.2, marginRight: 0.2 } };
+			var options = Object.assign({}, DEFAULT_PDF_OPTIONS, pdfOptions);
 
-			console.log(options);
-
-			pdf.create(html, options).then(function(pdf){
-				callback(null, pdf.toStream());
-			})
+			// export as PDF
+			pdf.create(html, options).toStream(function(err, stream){
+				if (err)
+				{
+					callback (err, null);
+				}
+				else
+				{
+					callback (null, stream);
+				}
+			});
 		}
 	});
 };

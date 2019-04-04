@@ -34,7 +34,7 @@ app.post('/api/PDF/GetPDF', function (req, res) {
     res.setHeader('Content-type', 'application/pdf');
     stream.pipe(res);
   },
-  "schoolbus_permit", data);
+  "schoolbus_permit", data, {});
 });
 
 app.listen(port, ip);
